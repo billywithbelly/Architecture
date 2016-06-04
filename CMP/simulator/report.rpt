@@ -1,6 +1,6 @@
 ICache :
-# hits: 21
-# misses: 25
+# hits: 25
+# misses: 21
 
 DCache :
 # hits: 2
