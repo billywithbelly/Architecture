@@ -4,7 +4,7 @@ SRCS = ./*.cpp
 OBS = ./*.o
 
 # The following line means that do SRC first.
-pipeline: SRC
+CMP: SRC
 	$(CC) -o $@ *.o
 
 SRC: $(SRCS)
@@ -13,4 +13,4 @@ SRC: $(SRCS)
 .PHONY :
 	clean
 clean: 
-	rm pipeline *.o
+	rm CMP *.o

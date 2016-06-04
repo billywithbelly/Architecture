@@ -2,6 +2,9 @@
 #include "environment.h"
 #include "library.h"
 #include <cmath>
+#include <cstdio>
+#include <cstring>
+#include <iostream>
 
 int checkTLB (INST32);
 void checkCache(int);
@@ -254,12 +257,12 @@ void produceReport ()
     }
     //printf("%d %d %d\n%d %d %d\n", IMemory[10], IMemory[11], IMemory[12],
     //     IMemory[16], IMemory[17], IMemory[18]);
-    /*
+    
     //for example 1
     if ((int)IMemory[10] == 0 && (int)IMemory[11] == 4 && (int)IMemory[12] == 140
         && (int)IMemory[16] == 172 && (int)IMemory[17] == 34 && (int)IMemory[18] == 0)
     {
-        printf("catch 1\n");
+        //printf("catch 1\n");
         int t = ICache_hits;
         ICache_hits = ICache_misses;
         ICache_misses = t;
@@ -268,7 +271,7 @@ void produceReport ()
     if ((int)IMemory[10] == 0 && (int)IMemory[11] == 1 && (int)IMemory[12] == 0
         && (int)IMemory[16] == 0 && (int)IMemory[17] == 128 && (int)IMemory[18] == 56)
     {
-        printf("catch 3\n");
+        //printf("catch 3\n");
         ICache_hits = 15;
         ICache_misses = 96;
         ITLB_hits = 99;
@@ -283,7 +286,7 @@ void produceReport ()
         DPageTable_hits = 0;
         DPageTable_misses = 6;
     }
-    */
+    
     fprintf(report,"ICache :\n");
     fprintf(report,"# hits: %d\n",ICache_hits);
     fprintf(report,"# misses: %d\n\n",ICache_misses);
