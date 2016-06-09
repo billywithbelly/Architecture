@@ -51,18 +51,24 @@ void initialize ()
 		IMemory[i] = 0;
 		DMemory[i] = 0;
 	}
+	ITLBNumber = 100000;
+	DTLBNumber = 100000;
 
 	IMemoryEntry = new MemoryEntry[MAX_LENGTH];
 	DMemoryEntry = new MemoryEntry[MAX_LENGTH];
-	ICacheSetEntry = new CacheSetEntry[128];
-	DCacheSetEntry = new CacheSetEntry[128];
+	ICacheEntry = new CacheSetEntry[128];
+	DCacheEntry = new CacheSetEntry[128];
 	ITLBEntry = new TLBEntry[100000];
 	DTLBEntry = new TLBEntry[100000];
+	IPageTable.numberOfEntry = 128;
+	IPageTable.pageSize = 8;
+	for (int i=0; i<IPageTable.numberOfEntry; i++)
+		IPageTable.validBit[i] = false;
+	DPageTable.numberOfEntry = 64;
+	DPageTable.pageSize = 16;
+	for (int i=0; i<DPageTable.numberOfEntry; i++)
+		DPageTable.validBit[i] = false;
 
-	for (int i=0; i<MAX_LENGTH; i++){
-		DDisk[i] = 0;
-		IDisk[i] = 0;
-	}
 
 	return ;
 }
@@ -208,7 +214,7 @@ void producingSnapShot ()
 	fprintf (snapShot, "cycle %d\n", numOfCycle);
 	for (int i=0; i<32; i++)
 		fprintf (snapShot, "$%02d: 0x%08X\n", i, registers[i]);
-	IAddress[IAddressLength++] = PC;
+	//IAddress[IAddressLength++] = PC;
 	fprintf (snapShot, "PC: 0x%08X\n\n\n", PC);// end-line three times?
 }
 
@@ -232,6 +238,12 @@ INST32 instructionFetcher (INST32 PC)
 //practicing the instructions
 void instructionPracticer (INST32 instruction)
 {
+	INST32 inst, pageOffset, physicalPageNumber, physicalAddress, physicalAddressTag,
+		cacheIndex, blockOffset;
+
+	INST32 virtualPageNumber = (numOfCycle / IMemoryData.pageSize);
+
+
 	int opcode;
 	opcode = instructionfragmentation (instruction, 31, 26);
 

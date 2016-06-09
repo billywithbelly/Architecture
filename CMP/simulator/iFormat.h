@@ -252,7 +252,7 @@ INST32 loadMemory (int location, int byte, int sign)
 	int tmpt = 0;
 	int basis;
 	
-	DAddress[DAddressLength++] = location;
+	//DAddress[DAddressLength++] = location;
 	basis = DMemory[location] >> 7;
 	for (int i=0; i<byte; i++)
 	{
@@ -273,7 +273,7 @@ INST32 loadMemory (int location, int byte, int sign)
 void saveMemory (int location, int byte, INST32 object)
 {
 	//input byte to control all save functions
-	DAddress[DAddressLength++] = location;
+	//DAddress[DAddressLength++] = location;
 	for (int i=byte - 1; i>=0; i--)
 	{
 		int tmpt = 0;

@@ -6,9 +6,6 @@
 typedef unsigned int INST32;
 typedef unsigned char INST8;
 
-char DDisk[MAX_LENGTH];
-INST32 IDisk[MAX_LENGTH];
-
 class result
 {
 public:
@@ -35,15 +32,15 @@ int DTLBNumber;
 class MemoryData
 {
 public:
-    INST32 MemorySize;
-    INST32 PageSize;
-    INST32 PageEntryNumber;
+    INST32 memorySize;
+    INST32 pageSize;
+    INST32 pageEntryNumber;
 
 
      MemoryData(){
-        MemorySize = 32;
-        PageSize = 16;
-        PageEntryNumber = MemorySize / PageSize;
+        memorySize = 32;
+        pageSize = 16;
+        pageEntryNumber = memorySize / pageSize;
      };
     /* data */
 };
@@ -52,19 +49,19 @@ public:
 class CacheData
 {
 public:
-    INST32 CacheSize;
-    INST32 BlockSize;
+    INST32 cacheSize;
+    INST32 blockSize;
     int nWay;
-    INST32 BlockEntryNumber;
+    INST32 blockEntryNumber;
     int index;
 
 
      CacheData(){
-        CacheSize = 16;
-        BlockSize = 4;
+        cacheSize = 16;
+        blockSize = 4;
         nWay = 1;
-        BlockEntryNumber = CacheSize / BlockSize;
-        index = BlockEntryNumber / nWay;
+        blockEntryNumber = cacheSize / blockSize;
+        index = blockEntryNumber / nWay;
      };
     /* data */
 };
@@ -75,13 +72,13 @@ class MemoryEntry
 public:
     char memory[MAX_LENGTH];
     bool validBit;
-    int cycle;
+    int onCycle;
 
    	MemoryEntry(){
         for (int i=0; i<MAX_LENGTH; i++)
-            memory[i] = '\0'
+            memory[i] = 0;
         validBit = false;
-        cycle = 0;
+        onCycle = 0;
     };
     /* data */
 };
@@ -108,10 +105,10 @@ public:
 class CacheSetEntry
 {
 public:
-    CacheBlockEntry *CacheBlock;
+    CacheBlockEntry *cacheBlock;
 
-    DCacheSetEntry(){
-        CacheBlock = new CacheBlockEntry[128];
+    CacheSetEntry(){
+        cacheBlock = new CacheBlockEntry[128];
     };
     /* data */
 };
@@ -122,13 +119,13 @@ public:
 	bool validBit;
 	INST32 tags;
 	INST32 physicalPageNumber;
-	int cycle;
+	int onCycle;
 
 	TLBEntry(){
 		validBit = false;
 		tags = 0;
 		physicalPageNumber = 0;
-		cycle = 0;
+		onCycle = 0;
 	};
 	/* data */
 };
@@ -136,14 +133,14 @@ public:
 class PageTable
 {
 public:
-	int NumberOfEntry;
-	int PageSize;
+	int numberOfEntry;
+	int pageSize;
 	bool validBit[100000];
 	INST32 physicalPageNumber[100000];
 
 	PageTable(){
-		NumberOfEntry = 0;
-		PageTable = 0;
+		numberOfEntry = 64;
+		pageSize = 0;
 		for (int i=0; i<100000; i++){
 			validBit[i] = false;
 			physicalPageNumber[i] = 0;
@@ -165,6 +162,6 @@ result DPageResult, IPageResult;
 
 //entries
 MemoryEntry *DMemoryEntry, *IMemoryEntry;
-CacheSetEntry *DCacheSetEntry, *ICacheEntry;
+CacheSetEntry *DCacheEntry, *ICacheEntry;
 
 #endif

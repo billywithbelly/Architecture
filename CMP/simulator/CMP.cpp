@@ -22,9 +22,7 @@ using namespace std;
 
 int main (int argc, char *argv[])
 {
-	if (argc == 11)
-		for (int i=0; i<argc; i++)
-			command[i] = atoi(argv[i]);
+	
 	//the main file is the structure of my design.
 	snapShot = fopen (toS, "w");
 	error = fopen (toE, "w");
@@ -37,7 +35,7 @@ int main (int argc, char *argv[])
 	while (!halt)//a cycle() funtion be put in a while loop to control and practice every cycle
 		cycle ();
 
-	produceReport ();
+	//produceReport ();
 
 	return 0;
 }
