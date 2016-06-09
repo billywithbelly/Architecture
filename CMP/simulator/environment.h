@@ -44,13 +44,6 @@ void cycle ();
 void initialize ()
 {
 	PC = 0;
-	DAddressLength = 0;
-	IAddressLength = 0;
-	for (int i=0; i<1000000; i++)
-	{
-		DAddress[i] = 0;
-		IAddress[i] = 0;
-	}
 	for (int i=0; i<32; i++)
 		registers[i] = 0;
 	for (int i=0; i<MAX_LENGTH; i++)
@@ -58,6 +51,19 @@ void initialize ()
 		IMemory[i] = 0;
 		DMemory[i] = 0;
 	}
+
+	IMemoryEntry = new MemoryEntry[MAX_LENGTH];
+	DMemoryEntry = new MemoryEntry[MAX_LENGTH];
+	ICacheSetEntry = new CacheSetEntry[128];
+	DCacheSetEntry = new CacheSetEntry[128];
+	ITLBEntry = new TLBEntry[100000];
+	DTLBEntry = new TLBEntry[100000];
+
+	for (int i=0; i<MAX_LENGTH; i++){
+		DDisk[i] = 0;
+		IDisk[i] = 0;
+	}
+
 	return ;
 }
 
